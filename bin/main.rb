@@ -37,20 +37,26 @@ winning_combinations = [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 5], [2, 5, 8], 
 puts "Welcome to Tic Tac Toe!"
 puts "It's a two player game, so we'll need your names."
 puts "Enter Player 1: "
-player1 = gets.chomp
+playerX = gets.chomp
+player1 = Player.new(playerX, "X")
 puts "Enter Player 2: "
-player2 = gets.chomp
-#create variables to hold "winning combinations", "Player 1's choices" and "Player 2's choices"
+playerO = gets.chomp
+player2 = Player.new(playerO, "O")
+board = Board.new
 puts ""
 #Prompt player for choices until a winning combination of choices or a tie is obtained
-print "###\n###\n###\n"
+board.display
 puts ""
-puts "#{player1} your turn, choose a cell[1-9]: "
-puts "#{player1} choices are updated"
+puts "#{player1.name} your turn, choose a cell[1-9]: "
+choice = gets.chomp.to_i
+player1.make_choice(choice)
+board.board_cells[choice-1] = 'X'
 puts ""
-print "###\n###\n###\n"
+board.display
 puts ""
-puts "#{player2} your turn, choose a cell[1-9]: "
-puts "#{player2} choices are updated"
+puts "#{player2.name} your turn, choose a cell[1-9]: "
+choice = gets.chomp.to_i
+player2.make_choice(choice)
+board.board_cells[choice-1] = 'O'
 puts ""
 puts "The Winner is: #{player1}"
