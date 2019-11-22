@@ -7,23 +7,17 @@ puts "Enter Player 1: "
 player1 = gets.chomp
 puts "Enter Player 2: "
 player2 = gets.chomp
-player1_choices, player2_choices = []
-winning_combinations = [[1, 2], [3, 4]]
-until winning_combinations.includes?(player1_choices) || winning_combinations.includes?(player2_choices)
+#create variables to hold "winning combinations", "Player 1's choices" and "Player 2's choices"
+puts ""
+#Prompt player for choices until a winning combination of choices or a tie is obtained
 print "###\n###\n###\n"
+puts ""
 puts "#{player1} your turn, choose a cell[1-9]: "
-player1_choices << gets.chomp
+puts "#{player1} choices are updated"
+puts ""
 print "###\n###\n###\n"
+puts ""
 puts "#{player2} your turn, choose a cell[1-9]: "
-player2_choices << gets.chomp
-end
-puts "player1 wins"
-
-# 4- Show the Board                       Loop again
-# 5- Ask player 1 for to choose a cell    |
-# 6- Show 'updated' Board                 |
-# 7- Ask player 2 for to choose a cell    v
-# 8- Repeat steps 4-7 until one of the players has a winning combination of choices
-# 9- Display game outcome
-# 10- Ask if players want to play again or quit
-# 11- If choice is 'play again' loop back to step 1. Otherwise quit the game.
+puts "#{player2} choices are updated"
+puts ""
+puts "The Winner is: #{player1}"
