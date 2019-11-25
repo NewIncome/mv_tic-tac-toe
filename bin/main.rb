@@ -33,7 +33,7 @@ class Player
   end
 end
 
-winning_combinations = [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 5], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ]
+winning_combinations = [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ]
 
 puts "Welcome to Tic Tac Toe!"
 puts "It's a two player game, so we'll need your names."
@@ -62,10 +62,11 @@ def prompt_user(board, player, winning_combinations)
 	choice = gets.chomp.to_i
 	player.make_choice(choice)
 	board.board_cells[choice-1] = player.sign
-	if player.choices.length > 3
-		player.choices = []
-	elsif player.choices.length == 3
-		player.winner = true if winning_combinations.include?(player.choices.sort)
+	winning_combinations.each do |arr|
+		if player.choices.length >= 3 && player.choices.sort & arr == arr
+			player.winner = true
+			break
+		end
 	end
 end
 
@@ -77,9 +78,9 @@ until board.board_cells.all?(String)
 end
 
 if player1.winner == true
-	puts player1.name
+	puts "The winner is: #{player1.name}!"
 elsif player2.winner == true
-	puts player2.name
+	puts "The winner is: #{player2.name}!"
 else
-	puts "Tie"
+	puts "The game outcome is a Tie."
 end
