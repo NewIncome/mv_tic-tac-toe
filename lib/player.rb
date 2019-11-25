@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Player
   attr_accessor :choices, :winner
   attr_reader :name, :sign
@@ -5,8 +7,8 @@ class Player
   def initialize(name, sign, winner = false)
     @name = name
     @sign = sign
-		@choices = []
-		@winner = winner
+    @choices = []
+    @winner = winner
   end
 
   def make_choice(choice)
