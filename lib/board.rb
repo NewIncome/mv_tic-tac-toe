@@ -14,6 +14,6 @@ class Board
     \t \t #{@board_cells[3]} | #{@board_cells[4]} | #{@board_cells[5]}
     \t \t --+---+---
     \t \t #{@board_cells[6]} | #{@board_cells[7]} | #{@board_cells[8]}
-    " 
+    "
   end
 end
