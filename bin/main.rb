@@ -16,7 +16,7 @@ playerO = gets.chomp
 player2 = Player.new(playerO, 'O')
 board = Board.new
 puts ''
-board.display
+puts board.display
 puts ''
 
 def game(board, player, winning_combinations)
@@ -35,7 +35,7 @@ def game(board, player, winning_combinations)
 		end
 	end
 	puts ''
-	board.display
+	puts board.display
 	puts ''
 end
 
