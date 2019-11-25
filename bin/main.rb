@@ -1,38 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-class Board
-	attr_accessor :board_cells, :choices_made
-	def initialize
-			@board_cells = [1,2,3,4,5,6,7,8,9]
-			@choices_made = []
-	end
-	def display
-			puts ""
-			puts "\t \t #{@board_cells[0]} | #{@board_cells[1]} | #{@board_cells[2]}"
-			puts "\t \t --+---+---"
-			puts "\t \t #{@board_cells[3]} | #{@board_cells[4]} | #{@board_cells[5]}"
-			puts "\t \t --+---+---"
-			puts "\t \t #{@board_cells[6]} | #{@board_cells[7]} | #{@board_cells[8]}"
-			puts ""
-	end
-end
-
-class Player
-  attr_accessor :choices, :winner
-  attr_reader :name, :sign
-
-  def initialize(name, sign, winner = false)
-    @name = name
-    @sign = sign
-		@choices = []
-		@winner = winner
-  end
-
-  def make_choice(choice)
-    @choices << choice
-  end
-end
+require_relative "../lib/board"
+require_relative "../lib/player"
 
 winning_combinations = [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7] ]
 
@@ -49,18 +19,15 @@ puts ""
 board.display
 puts ""
 
-p board.choices_made
-def prompt_user(board, player, winning_combinations)
-	puts "#{player.name} your turn, choose a cell[1-9]: "
+def game(board, player, winning_combinations)
+	puts "#{player.name}, it's your turn, choose an unselected cell from the board: "
 	choice = gets.chomp.to_i
-	until ((1..9).include?(choice) && board.choices_made.include?(choice))
-		p (1..9).include?(choice) && board.choices_made.include?(choice)
-		puts "Please input a number between 1-9 that you haven't selected before: "
+	until board.board_cells.include?(choice)
+		puts "Please input a number between 1-9 in the available options on the board: "
 		choice = gets.chomp.to_i
 	end
 	player.make_choice(choice)
-	board.choices_made << choice
-	board.board_cells[choice-1] = player.sign
+	board.board_cells[choice - 1] = player.sign
 	winning_combinations.each do |arr|
 		if player.choices.length >= 3 && player.choices.sort & arr == arr
 			player.winner = true
@@ -72,10 +39,11 @@ def prompt_user(board, player, winning_combinations)
 	puts ""
 end
 
+
 until board.board_cells.all?(String)
-	prompt_user(board, player1, winning_combinations)
+	game(board, player1, winning_combinations)
 	break if board.board_cells.all?(String) || player1.winner == true
-	prompt_user(board, player2, winning_combinations)
+	game(board, player2, winning_combinations)
 	break if board.board_cells.all?(String) || player2.winner == true
 end
 
