@@ -2,9 +2,10 @@
 # frozen_string_literal: true
 
 class Board
-	attr_accessor :board_cells
+	attr_accessor :board_cells, :choices_made
 	def initialize
 			@board_cells = [1,2,3,4,5,6,7,8,9]
+			@choices_made = []
 	end
 	def display
 			puts ""
@@ -44,23 +45,21 @@ puts "Enter Player 2: "
 playerO = gets.chomp
 player2 = Player.new(playerO, "O")
 board = Board.new
+puts ""
+board.display
+puts ""
 
-
-
-#p board.board_cells.include?(Numeric)
-def max_choices(player)
-	if player.choices.length > 3
-		player.choices = []
-	end
-end
-
+p board.choices_made
 def prompt_user(board, player, winning_combinations)
-	puts ""
-	board.display
-	puts ""
 	puts "#{player.name} your turn, choose a cell[1-9]: "
 	choice = gets.chomp.to_i
+	until ((1..9).include?(choice) && board.choices_made.include?(choice))
+		p (1..9).include?(choice) && board.choices_made.include?(choice)
+		puts "Please input a number between 1-9 that you haven't selected before: "
+		choice = gets.chomp.to_i
+	end
 	player.make_choice(choice)
+	board.choices_made << choice
 	board.board_cells[choice-1] = player.sign
 	winning_combinations.each do |arr|
 		if player.choices.length >= 3 && player.choices.sort & arr == arr
@@ -68,6 +67,9 @@ def prompt_user(board, player, winning_combinations)
 			break
 		end
 	end
+	puts ""
+	board.display
+	puts ""
 end
 
 until board.board_cells.all?(String)
