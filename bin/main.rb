@@ -18,13 +18,14 @@ class Board
 end
 
 class Player
-  attr_accessor :choices
+  attr_accessor :choices, :winner
   attr_reader :name, :sign
 
-  def initialize(name, sign)
+  def initialize(name, sign, winner = false)
     @name = name
     @sign = sign
-    @choices = []
+		@choices = []
+		@winner = winner
   end
 
   def make_choice(choice)
@@ -43,20 +44,42 @@ puts "Enter Player 2: "
 playerO = gets.chomp
 player2 = Player.new(playerO, "O")
 board = Board.new
-puts ""
-#Prompt player for choices until a winning combination of choices or a tie is obtained
-board.display
-puts ""
-puts "#{player1.name} your turn, choose a cell[1-9]: "
-choice = gets.chomp.to_i
-player1.make_choice(choice)
-board.board_cells[choice-1] = 'X'
-puts ""
-board.display
-puts ""
-puts "#{player2.name} your turn, choose a cell[1-9]: "
-choice = gets.chomp.to_i
-player2.make_choice(choice)
-board.board_cells[choice-1] = 'O'
-puts ""
-puts "The Winner is: #{player1}"
+
+
+
+#p board.board_cells.include?(Numeric)
+def max_choices(player)
+	if player.choices.length > 3
+		player.choices = []
+	end
+end
+
+def prompt_user(board, player, winning_combinations)
+	puts ""
+	board.display
+	puts ""
+	puts "#{player.name} your turn, choose a cell[1-9]: "
+	choice = gets.chomp.to_i
+	player.make_choice(choice)
+	board.board_cells[choice-1] = player.sign
+	if player.choices.length > 3
+		player.choices = []
+	elsif player.choices.length == 3
+		player.winner = true if winning_combinations.include?(player.choices.sort)
+	end
+end
+
+until board.board_cells.all?(String)
+	prompt_user(board, player1, winning_combinations)
+	break if board.board_cells.all?(String) || player1.winner == true
+	prompt_user(board, player2, winning_combinations)
+	break if board.board_cells.all?(String) || player2.winner == true
+end
+
+if player1.winner == true
+	puts player1.name
+elsif player2.winner == true
+	puts player2.name
+else
+	puts "Tie"
+end
