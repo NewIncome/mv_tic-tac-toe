@@ -10,10 +10,10 @@ puts 'Welcome to Tic Tac Toe!'
 puts "It's a two player game, so we'll need your names."
 puts 'Enter Player 1: '
 playerX = gets.chomp
-player1 = Player.new(playerX, 'X')
+player1 = playerX.empty? ? Player.new('Player1', 'X') : Player.new(playerX, 'X')
 puts 'Enter Player 2: '
 playerO = gets.chomp
-player2 = Player.new(playerO, 'O')
+player2 = playerO.empty? ? Player.new('Player2', 'O') : Player.new(playerO, 'O')
 board = Board.new
 puts ''
 puts board.display
