@@ -8,10 +8,11 @@ winning_combinations = [ [1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], 
 
 puts 'Welcome to Tic Tac Toe!'
 puts "It's a two player game, so we'll need your names."
-puts 'Enter Player 1: '
+puts "If a user name is not entered, a default name will be assigned."
+puts "Enter Player 1's name: "
 playerX = gets.chomp
 player1 = playerX.empty? ? Player.new('Player1', 'X') : Player.new(playerX, 'X')
-puts 'Enter Player 2: '
+puts "Enter Player 2's name: "
 playerO = gets.chomp
 player2 = playerO.empty? ? Player.new('Player2', 'O') : Player.new(playerO, 'O')
 board = Board.new
@@ -38,7 +39,6 @@ def game(board, player, winning_combinations)
 	puts board.display
 	puts ''
 end
-
 
 until board.board_cells.all?(String)
 	game(board, player1, winning_combinations)
