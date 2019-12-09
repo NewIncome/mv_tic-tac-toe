@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "../lib/player"
+require_relative '../lib/player'
 
 RSpec.describe(Player) do
-  let(:player) {Player.new('Player 1', 'X')}
+  let(:player) { Player.new('Player 1', 'X') }
 
   it('has a name') do
     expect(player.name).to(eq('Player 1'))
@@ -30,5 +30,4 @@ RSpec.describe(Player) do
     player.make_choice(6)
     expect(player.choices).to(eq([6]))
   end
-
 end
